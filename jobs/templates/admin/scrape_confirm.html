@@ -1,0 +1,12 @@
+{% extends 'admin/base_site.html' %}
+
+{% block content %}
+<h1>Scrape All Job Sources</h1>
+<p>This will scrape jobs from all active sources. This may take a few minutes.</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="button">Start Scraping</button>
+    <a href="{% url 'admin:jobs_jobsource_changelist' %}" class="button">Cancel</a>
+</form>
+{% endblock %}

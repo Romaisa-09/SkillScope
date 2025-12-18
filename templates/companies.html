@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Companies Hiring - SkillScope{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="text-center mb-5">
+        <h1><i class="bi bi-building"></i> Companies Hiring</h1>
+        <p class="text-muted">Discover companies actively looking for talent</p>
+    </div>
+    
+    <div class="row">
+        {% for company in companies %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="job-card text-center">
+                <div class="company-logo mx-auto mb-3" style="width: 80px; height: 80px; font-size: 2rem;">
+                    {{ company.name|slice:":1"|upper }}
+                </div>
+                
+                <h5>{{ company.name }}</h5>
+                <p class="text-muted">{{ company.description|truncatewords:15 }}</p>
+                
+                <div class="mb-3">
+                    <span class="job-badge success">
+                        <i class="bi bi-briefcase"></i> {{ company.job_count }} Open Position{{ company.job_count|pluralize }}
+                    </span>
+                </div>
+                
+                <div class="d-grid gap-2">
+                    <a href="{% url 'jobs' %}?search={{ company.name }}" class="btn btn-primary-custom btn-sm">
+                        <i class="bi bi-eye"></i> View Jobs
+                    </a>
+                    {% if company.website %}
+                    <a href="{{ company.website }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                        <i class="bi bi-globe"></i> Visit Website
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info text-center">
+                <i class="bi bi-info-circle"></i> No companies found. Run the scraper to fetch company data!
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
